@@ -1,14 +1,26 @@
-import './assets/main.css'
+import './assets/main.css';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { initializeApp } from 'firebase/app';
 
-import App from './App.vue'
-import router from './router'
+import App from './App.vue';
+import router from './router';
 
-const app = createApp(App)
+const firebaseConfig = {
+  apiKey: 'AIzaSyAeAWdKSf27dPMB_s3eTS3fuPz_ZcaCB34',
+  authDomain: 'jwt-firebase-46e88.firebaseapp.com',
+  projectId: 'jwt-firebase-46e88',
+  storageBucket: 'jwt-firebase-46e88.appspot.com',
+  messagingSenderId: '732412129252',
+  appId: '1:732412129252:web:79da15b196fd9c1f4421f1',
+};
 
-app.use(createPinia())
-app.use(router)
+initializeApp(firebaseConfig);
 
-app.mount('#app')
+const app = createApp(App);
+
+app.use(createPinia());
+app.use(router);
+
+app.mount('#app');
