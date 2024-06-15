@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import axios from 'axios';
-import '../api/api.ts';
+// import '../api/api.ts';
 
 const authStore = useAuthStore();
 const cars = ref();
