@@ -1,8 +1,29 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { computed } from 'vue';
+import { RouterLink, RouterView } from 'vue-router';
+import { useAuthStore } from './stores/auth';
+
+const authStore = useAuthStore();
+const token = computed(() => authStore.userInfo.token);
+
+const checkUser = () => {
+  const getUserTokens = localStorage.getItem('userTokens');
+  if (getUserTokens) {
+    authStore.userInfo.token = JSON.parse(getUserTokens).token;
+    authStore.userInfo.refreshToken = JSON.parse(getUserTokens).refreshToken;
+    authStore.userInfo.expiresIn = JSON.parse(getUserTokens).expiresIn;
+  }
+};
+
+checkUser();
 </script>
 
 <template>
+  <div>
+    <router-link to="/">Home</router-link>
+    <router-link to="/signin" v-if="!token">Login</router-link>
+    <router-link to="/cars" v-if="token">Cars</router-link>
+  </div>
   <RouterView />
 </template>
 
