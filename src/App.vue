@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import { useAuthStore } from './stores/auth';
+import router from './router';
 
 const authStore = useAuthStore();
 const token = computed(() => authStore.userInfo.token);
@@ -15,6 +16,12 @@ const checkUser = () => {
   }
 };
 
+const logout = () => {
+  authStore.logout();
+  localStorage.removeItem('userTokens');
+  router.push('/signin');
+};
+
 checkUser();
 </script>
 
@@ -23,6 +30,9 @@ checkUser();
     <router-link to="/">Home</router-link>
     <router-link to="/signin" v-if="!token">Login</router-link>
     <router-link to="/cars" v-if="token">Cars</router-link>
+    <router-link to="/signin" v-if="token" @click.prevent="logout"
+      >Logout</router-link
+    >
   </div>
   <RouterView />
 </template>

@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
-import axios from 'axios';
+import axiosApiInstance from '../api/api';
 // import '../api/api.ts';
 
-const authStore = useAuthStore();
 const cars = ref();
 
 const getAllCars = async () => {
@@ -14,7 +13,7 @@ const getAllCars = async () => {
     //     authStore.userInfo.token
     //   }`,
     // );
-    const response = await axios.get(
+    const response = await axiosApiInstance.get(
       `https://jwt-firebase-46e88-default-rtdb.europe-west1.firebasedatabase.app/cars.json`,
     );
     cars.value = response.data;

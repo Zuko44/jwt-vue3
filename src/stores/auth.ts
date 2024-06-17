@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import axiosApiInstance from '../api/api';
 
 const apiKey = 'AIzaSyAeAWdKSf27dPMB_s3eTS3fuPz_ZcaCB34';
 
@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
     const stringUrl = type === 'signup' ? 'signup' : 'signInWithPassword';
     error.value = '';
     try {
-      const response = await axios.post(
+      const response = await axiosApiInstance.post(
         `https://identitytoolkit.googleapis.com/v1/accounts:${stringUrl}?key=${apiKey}`,
         {
           ...payload,
@@ -61,5 +61,16 @@ export const useAuthStore = defineStore('auth', () => {
       throw error.value;
     }
   };
-  return { auth, userInfo, error };
+
+  const logout = () => {
+    userInfo.value = {
+      token: '',
+      email: '',
+      userId: '',
+      refreshToken: '',
+      expiresIn: '',
+    };
+  };
+
+  return { auth, userInfo, error, logout };
 });
